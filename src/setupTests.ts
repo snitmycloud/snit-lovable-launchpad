@@ -17,15 +17,12 @@ Object.defineProperty(window, 'matchMedia', {
 });
 
 // Mock IntersectionObserver
-global.IntersectionObserver = class IntersectionObserver {
-  constructor() {}
-  observe() {
-    return null;
-  }
-  disconnect() {
-    return null;
-  }
-  unobserve() {
-    return null;
-  }
-};
+global.IntersectionObserver = jest.fn().mockImplementation((callback, options) => ({
+  observe: jest.fn(),
+  unobserve: jest.fn(),
+  disconnect: jest.fn(),
+  root: null,
+  rootMargin: '0px',
+  thresholds: [0],
+  takeRecords: jest.fn().mockReturnValue([]),
+})) as any;
